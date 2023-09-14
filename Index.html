@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .input-container {
+            display: flex;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f0f0f0;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        li:hover {
+            background-color: #ddd;
+        }
+
+        .delete-button {
+            background-color: #ff3333;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* New style for date and priority */
+        .task-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        select {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <div class="input-container">
+            <input type="text" id="taskInput" placeholder="Add a new task">
+            <button id="addTask">Add</button>
+        </div>
+        <ul id="taskList">
+            <!-- Tasks will be added here -->
+        </ul>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const taskInput = document.getElementById("taskInput");
+            const addTaskButton = document.getElementById("addTask");
+            const taskList = document.getElementById("taskList");
+
+            addTaskButton.addEventListener("click", function () {
+                const taskText = taskInput.value.trim();
+                if (taskText !== "") {
+                    const li = document.createElement("li");
+
+                    // Create a container for task details (date and priority)
+                    const taskDetails = document.createElement("div");
+                    taskDetails.classList.add("task-details");
+
+                    li.innerHTML = `
+                        <span>${taskText}</span>
+                        <div class="task-details">
+                            <input type="date" class="deadline">
+                            <select class="priority">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <button class="delete-button">Delete</button>
+                    `;
+                    taskList.appendChild(li);
+                    taskInput.value = "";
+
+                    const deleteButton = li.querySelector(".delete-button");
+                    deleteButton.addEventListener("click", function () {
+                        li.remove();
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
